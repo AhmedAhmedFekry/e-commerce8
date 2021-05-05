@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -65,7 +66,6 @@ INSTALLED_APPS = [
     "social_django",
     "django_extensions",
     "currencies",
-    "modeltranslation",
 ]
 
 MIDDLEWARE = [
