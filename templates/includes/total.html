@@ -1,0 +1,4 @@
+{% load currency %}
+
+{{ tot|default:0|currency:request.session.currency }}
+{{ request.session.currency }}

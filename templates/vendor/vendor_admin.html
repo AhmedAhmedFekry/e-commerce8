@@ -1,0 +1,152 @@
+{% extends 'base/base_vendor.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency %}
+{% get_current_language as LAN %}
+
+{% block title %}
+{{setting.title}}
+{% endblock title %}
+{% block keywords %}
+{{setting.keywords}}
+{% endblock keywords %}
+{% block description %}
+{{setting.description}}
+{% endblock description %}
+{% block imageIcon %}
+<link rel="shortcut icon" type="image/jepg" href="{% static 'img/golden_pound_icon.jpg' %}" sizes="20x20" />
+{% endblock imageIcon %}
+
+
+
+
+
+{% block breadcrumb %}
+  <!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container" style="padding:6px; margin: 0px 6px;">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}"> {% trans "Home" %}</a></li>
+            <li class="active"> {% trans "Vendor Dashboard" %}</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+{% endblock breadcrumb %}
+
+
+{% block content1 %}
+<div class="order-summary clearfix">
+    <div class="section-title">
+        <h3 class="title"> Vendor admin - {{ vendor.name }}</h3>
+    </div>
+ 
+        <div class="row">
+            <div class="col-md-4" style="text-align: center" >   <div> <i class="fa fa-money  fa-5x"   style=" border-radius: 50%; background-color:#2FF3E0; width: 95px;height: 95px; line-height: 95px; color: #16a085;" aria-hidden="true"></i>
+            </div><p style="margin: 20px;font-size: 26px;font-weight: 500;font-family: cursive;">
+              
+                blance</p></div>
+            <div class="col-md-4" style="text-align: center" >
+                <div>
+                    <i class="fa fa-tasks fa-5x"  style=" border-radius: 50%; background-color:#2FF3E0; width: 95px;height: 95px; line-height: 95px; color: #FA26A0;"aria-hidden="true"></i>
+
+                </div>
+                <p style="margin: 20px;font-size: 26px;font-weight: 500;font-family: cursive;">product</p> 
+                <a href="">  view more</a>
+            </div>
+            <div class="col-md-4" style="text-align: center" > 
+                <div > <i class="fa fa-star fa-5x"   style=" border-radius: 50%; background-color:#2FF3E0; width: 95px;height: 95px; line-height: 95px; color: #F8D210;" aria-hidden="true"></i>
+                </div>
+                <p style="margin: 20px;font-size: 26px;font-weight: 500;font-family: cursive;">
+               
+                review</p></div>
+        </div>
+   
+   
+ 
+</div>
+{% endblock content1 %}
+{% block content2 %}
+<div class="col-md-12">
+    <div class="section-title">
+        <h4 class="title"> {% trans "Order Item List" %} </h4>
+    </div>
+
+    <table class="shopping-cart-table table">
+        <thead>
+            <tr>
+        
+                <th>{% trans "Product" %}</th>
+                <th></th>
+                <th class="text-center">{% trans "category" %}</th>
+                <th class="text-center">{% trans "Price" %}</th>
+                <th class="text-center">{% trans "Quantity" %}</th>
+                <th class="text-center">{% trans "Status" %}</th>
+                <th class="text-right">{% trans "Action" %}</th>
+            </tr>
+        </thead>
+        <tbody class="shopp">
+           
+            {% for product in products %}
+            
+            <tr id="ppppp" data-index="{{product.id}}" class="product-item">
+                <td class="thumb">
+                    <a href="/product/{{ product.id}}/{{ product.slug }}">
+                        {% if product.variant.image_id > 0 %}
+                        <img src="" alt="" style="height: 50px;margin: 0px auto;" class="img-responsive">
+                        {% else %}
+                        <img src="{{product.image.url}}" alt="" style="height: 50px;margin: 0px auto;" class="img-responsive">
+                        {% endif %}
+                    </a>
+                </td>
+                <td class="details">
+                    <a href="/{{LAN}}/product/{{ product.id }}/{{ product.slug }}">{{product.title}}
+                        {{ rs.variant.size|default_if_none:""  }} {{ rs.variant.color }}</a>
+                </td>
+                <td class="category text-center"><strong>
+                    
+                    {{ product.category}}
+                    
+                </strong></td>
+                <td class="price text-center"><strong>
+                    
+                        {{ product.price|currency:request.session.currency }}
+                        {{ request.session.currency }}
+                        
+                    </strong></td>
+                <td class="qty text-center dddd">
+                    {{product.amount}}
+                </td>
+                <td class="total text-center">
+                    
+                    {% if product.status == "True" %}
+                    <i class="fa fa-check" style="color: #27ae60;" aria-hidden="true"></i>
+
+                        {% else %}
+                        <i class="fa fa-times-circle" style="color: #e74c3c;" aria-hidden="true"></i>
+
+                    {% endif %}
+                        
+                        
+                   </td>
+                <td class="text-right">
+        
+                    <a   href="{% url 'edit_product' product.id %}" class="primary-btn icon-btn delete-button" data-index="{{product.id}}" ><i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <button class="primary-btn icon-btn delete-button" data-index="{{product.id}}" ><i
+                            class="fa fa-trash"></i></button>
+        
+                </td>
+            </tr>
+   
+            {% endfor %}
+           
+        </tbody>
+      
+    </table>
+
+   </div>
+{% endblock content2 %}
+
+
+

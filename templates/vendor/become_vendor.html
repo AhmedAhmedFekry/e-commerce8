@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency %}
+
+{% block title %}
+{{setting.title}}
+{% endblock title %}
+{% block keywords %}
+{{setting.keywords}}
+{% endblock keywords %}
+{% block description %}
+{{setting.description}}
+{% endblock description %}
+{% block imageIcon %}
+<link rel="shortcut icon" type="image/jepg" href="{% static 'img/golden_pound_icon.jpg' %}" sizes="20x20" />
+{% endblock imageIcon %}
+
+{% block content %}
+{% include 'includes/nav.html' %}
+
+<!-- BREADCRUMB -->
+
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">{% trans "Home" %}</a></li>
+            <li class="active">{% trans "About Us" %}</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+<!-- section -->
+<div class="section">
+    <div class="container">
+        <h1 class="title">Become vendor</h1>
+
+        <form method="post" action=".">
+            {% csrf_token %}
+    
+            {{ form.as_p }}
+    
+            <div class="field">
+                <div class="control">
+                    <button class="button is-dark is-uppercase">Sign up</button>
+                </div>
+            </div>
+        </form>
+    
+        <hr>
+    
+        <h2 class="subtitle">Already have an account?</h2>
+    
+        <a href="{% url 'login_vendor' %}">Log in</a>
+    
+    </div>
+</div>
+<!-- /section -->
+
+{% endblock content %}

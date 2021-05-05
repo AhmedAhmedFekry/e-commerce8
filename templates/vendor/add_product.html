@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load currency %}
+{% load i18n %}
+{% block title %}
+{{setting.title}}
+{% endblock title %}
+{% block keywords %}
+{{setting.keywords}}
+{% endblock keywords %}
+{% block description %}
+{{setting.description}}
+{% endblock description %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+{% block content %}
+{% include 'includes/nav.html' %}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container" style="padding:6px; margin: 0px 6px;">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}"> {% trans "Home" %} </a></li>
+            <li class="active"> {% trans "log in" %} </li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+          
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+        
+                {{ form.as_p }}
+        
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-dark is-uppercase">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+{% endblock content %}

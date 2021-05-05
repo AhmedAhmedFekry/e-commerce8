@@ -1,0 +1,65 @@
+{% extends 'base/base_vendor.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency %}
+{% get_current_language as LAN %}
+
+{% block title %}
+{{setting.title}}
+{% endblock title %}
+{% block keywords %}
+{{setting.keywords}}
+{% endblock keywords %}
+{% block description %}
+{{setting.description}}
+{% endblock description %}
+{% block imageIcon %}
+<link rel="shortcut icon" type="image/jepg" href="{% static 'img/golden_pound_icon.jpg' %}" sizes="20x20" />
+{% endblock imageIcon %}
+
+
+
+
+
+{% block breadcrumb %}
+  <!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container" style="padding:6px; margin: 0px 6px;">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}"> {% trans "Home" %}</a></li>
+            <li class="active"> {% trans "Vendor Dashboard" %}</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+{% endblock breadcrumb %}
+
+
+{% block content1 %}
+<div class="order-summary clearfix">
+    <div class="section-title">
+        <h3 class="title"> Vendor admin - {{ vendor.name }}</h3>
+    </div>
+ 
+        <div class="row">
+           <h3> edit product</h3>
+           <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+    
+            {{ form.as_p }}
+    
+            <div class="field">
+                <div class="control">
+                    <button class="button is-dark is-uppercase">Submit</button>
+                </div>
+            </div>
+        </form>
+        </div>
+   
+   
+ 
+</div>
+{% endblock content1 %}
+
+
+

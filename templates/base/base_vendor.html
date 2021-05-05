@@ -1,0 +1,193 @@
+{% load static %}
+{% load i18n %}
+{% load currency %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>{% block title %} My Home Page {% endblock title %}</title>
+  <meta name="keywords" content="{% block keywords %} Home Keywords {% endblock keywords %}">
+  <meta name="description" content="{% block description %} Home description  {% endblock description %}">
+   {% block imageIcon %}
+   <link
+rel="shortcut icon"
+type="image/jepg"
+href="{% static 'img/golden_pound_icon.jpg' %}"
+sizes="20x20"
+/>
+   {% endblock imageIcon %}
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <!-- Slick -->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/slick.css'%}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css'%}" />
+
+  <!-- nouislider -->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css'%}" />
+
+  <!-- Font Awesome Icon -->
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
+
+  <!-- Custom stlylesheet -->
+  <link type="text/css" rel="stylesheet" href="{% static 'css/style.css'%}" />
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  
+  <!-- jQuery !-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+  <!-- jQuery UI !-->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  {% get_current_language as LANGUAGE_COE %}
+
+  {% if LANGUAGE_COE == 'ar' %}
+
+  <link type="text/css" rel="stylesheet" href="{% static 'css/style-rtl.css'%}" />
+  {% endif %}
+
+
+  {% block head %}
+
+
+  {% endblock head %}
+</head>
+
+<body>
+
+  
+  <header>
+    <!-- top Header -->
+    <div id="top-header">
+        <div class="container">
+            <div class="pull-left">
+                <span>{% trans "Welcome to E-shop!" %}</span>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}" role="alert">
+                    {{ message |safe }}
+                </div>
+                {% endfor %}
+
+                {% endif %}
+            </div>
+            
+            <div class="pull-right">
+                <ul class="header-top-links">
+                    <li><a href="#">{% trans "Store" %}</a></li>
+                    <li><a href="{% url 'become_vendor' %}">{% trans "become_vendor" %}</a></li>
+                    <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
+                    <li class="dropdown default-dropdown">
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+                            <select name="language" onchange="submit()">
+
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGESS %}
+                                {% get_language_info_list for LANGUAGESS as languages %}
+                                {% for language in languages %}
+                                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}
+                                    selected{% endif %}>
+                                    {{ language.name_local }} ({{ language.code }})
+                                </option>
+                                {% endfor %}
+
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Set" />
+                            </noscript>
+                        </form>
+                    </li>
+                    <li class="dropdown default-dropdown">
+                        
+                        <form id="currency_switcher" method="POST" action="{% url 'selectcurrency' %}">
+                            {% csrf_token %}
+                            <select name="currency" onchange="submit()">
+                                {% for curr in CURRENCIES %}
+                                <option value="{{ curr.code }}"
+                                    {% ifequal curr.code request.session.currency %}selected="selected"
+                                    {% endifequal %}>
+                                    {{ curr.symbol }} {{ curr.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <noscript>
+                                <input type="submit" value="Set" />
+                            </noscript>
+
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /top Header -->
+
+
+    
+    <!-- container -->
+</header>
+{% block breadcrumb %}
+  {% endblock breadcrumb %}
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-3">
+                {% include "vendor/vendor_panel.html" %}
+            </div>
+
+            <div class="col-md-9">
+                {% block content1 %}
+  
+                {% endblock content1 %}
+            </div> 
+         
+        </div>
+        {% block content2 %}
+          
+        {% endblock content2 %}
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+
+{% include 'includes/footer.html' %}
+
+<script>
+
+
+
+</script>
+  {% block foot %} {% endblock foot%}
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static '' %}js/slick.min.js"></script>
+  <script src="{% static '' %}js/nouislider.min.js"></script>
+  <script src="{% static '' %}js/jquery.zoom.min.js"></script>
+
+  <script src="{% static '' %}js/jquery.ui.slider-rtl.js"></script>
+ 
+
+  <script src="{% static '' %}js/nouislider.min.js"></script>
+  
+  <script src="{% static '' %}js/main.js"></script>
+</body>
+
+</html>
+
+
