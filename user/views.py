@@ -47,10 +47,10 @@ def login_form(request):
             return HttpResponseRedirect('/login')
     # Return an 'invalid login' error message.
 
-    # category = Category.objects.all()
-    # context = {'category': category}
-    # return render(request, 'pages/login_form.html', context)
-    return JsonResponse({"done": 'sweet'})
+    category = Category.objects.all()
+    context = {'category': category}
+    return render(request, 'pages/login_form.html', context)
+    # return JsonResponse({"done": 'sweet'})
 
 
 def logout_func(request):
