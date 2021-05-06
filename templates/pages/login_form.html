@@ -73,13 +73,13 @@
 
                             <ul>
 
-                            
+                                {% providers_media_js %}
                                 <li class="facebook">
-                                   
+                                    <a href="{% provider_login_url 'facebook' method='js_sdk' %}">Sign in with Facebook</a>
                                    
                                   </li>
                                   <li class="google">
-                                  
+                                    <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
                                    
                                   </li>
                                   <li> sadatmall</li>
