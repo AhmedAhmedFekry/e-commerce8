@@ -50,7 +50,7 @@ def login_form(request):
     # category = Category.objects.all()
     # context = {'category': category}
     # return render(request, 'pages/login_form.html', context)
-        return JsonResponse({"done": 'sweet'})
+    return JsonResponse({"done": 'sweet'})
 
 
 def logout_func(request):
